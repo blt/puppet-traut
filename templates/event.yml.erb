@@ -1,0 +1,5 @@
+- event: <%= route %>
+  command: <%= command %>
+  user: <%= user.empty? ? 'root' : user %>
+  group: <%= group.empty? ? 'root' : user %>
+
