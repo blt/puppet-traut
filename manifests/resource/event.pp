@@ -11,7 +11,7 @@ define traut::resource::event($ensure=present, $route, $command, $user='', $grou
   file { "${traut::includedir}/${title}.yml":
     ensure => $ensure ? { present => file, default => absent, },
     content => template('traut/event.yml.erb'),
-    require => Class['traut::package'],
+    require => Class['traut'],
     notify => Supervisor::Service['traut'],
   }
 }

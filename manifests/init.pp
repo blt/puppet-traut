@@ -9,9 +9,10 @@ class traut(
   $exchange,
   $private_key,
   $cert_chain,
+  $version=present,
 )
 {
-  include traut::package, traut::service
+  include traut::service
 
   $traut_conf = '/etc/traut'
   $includedir = '/etc/traut/events.d'
@@ -19,6 +20,7 @@ class traut(
 
   file {
     $traut_conf:
+      require => Package['traut'],
       ensure => directory;
     $includedir:
       require => File[$traut_conf],
@@ -31,4 +33,17 @@ class traut(
       ensure => $ensure ? { present => file, default => $ensure, };
   }
 
+  package { 'traut':
+    provider => gem,
+    ensure => $version,
+  }
+
+  if defined('apt::alternatives') {
+    apt::alternatives { 'traut':
+      ensure => present,
+      link => '/usr/bin/traut',
+      path => '/var/lib/gems/1.9.1/bin/traut',
+      require => Package['traut'],
+    }
+  }
 }

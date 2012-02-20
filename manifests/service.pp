@@ -5,8 +5,8 @@ class traut::service {
     numprocs  => 1,
     command   => "traut -C /etc/traut/traut.conf",
     startsecs => 3,
-    require   => [ Class['traut::package'], File['/etc/traut/traut.conf'] ],
-    subscribe => [ Class['traut::package'], File['/etc/traut/traut.conf'] ],
+    require   => File['/etc/traut/traut.conf'],
+    subscribe => File['/etc/traut/traut.conf'],
     alias     => Service['traut'],
   }
 }
