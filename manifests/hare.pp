@@ -8,7 +8,7 @@ class traut::hare {
     apt::alternatives { 'hare':
       ensure => present,
       link => '/usr/bin/hare',
-      path => '/var/lib/gems/1.9.1/bin/traut',
+      path => '/var/lib/gems/1.9.1/bin/hare',
       require => Package['hare'],
     }
   }
