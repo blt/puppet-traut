@@ -7,9 +7,9 @@
 #  [*user*]   -- Set the user to invoke the command as.
 #  [*group*]  -- Set the group to invoke the command as.
 #
-define traut::resource::event($ensure=file, $route, $command, $user='', $group='') {
+define traut::resource::event($ensure=present, $route, $command, $user='', $group='') {
   file { "${traut::includedir}/${title}.yml":
-    ensure => $ensure,
+    ensure => $ensure ? { present => file, default => absent, },
     content => template('traut/event.yml.erb'),
     require => Class['traut::package'],
     notify => Supervisor::Service['traut'],
